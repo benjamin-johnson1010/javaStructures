@@ -10,6 +10,10 @@ public class Treat{
 		mDescription = description;
 		mCreationDate = creationDate;	
 	}
+	@Override
+	public String toString(){
+		return "Treat: \"" + mDescription + "\" - @" + mAuthor;
+	}
 	public String getAuthor(){
 		return mAuthor;
 	}
