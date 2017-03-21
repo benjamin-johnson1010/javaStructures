@@ -1,7 +1,10 @@
 package com.team;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-public class Treat implements Comparable, Serializable{
+import java.util.List;
+public class Treat implements Comparable<Treat>, Serializable{
 	private static final long serialVersionUID = -3953639501150931364L;
 	private boolean mBreakIt = true;
 	private String mAuthor;
@@ -19,8 +22,7 @@ public class Treat implements Comparable, Serializable{
 				mDescription,mAuthor, mCreationDate);
 	}
 	@Override
-	public int compareTo(Object obj){
-		Treat other = (Treat) obj;
+	public int compareTo(Treat other){
 		if(equals(other)){
 			return 0;
 		}
@@ -39,7 +41,23 @@ public class Treat implements Comparable, Serializable{
 	public Date getCreationDate(){
 		return mCreationDate;
 	}
-public String[] getWords(){
-	return mDescription.toLowerCase().split("[^\\w#@']+");
+public List<String> getWords(){
+	String[] words = mDescription.toLowerCase().split("[^\\w#@']+");
+	return Arrays.asList(words);
+}
+public List<String> getHashTags(){
+	return getWordsPrefixedWith("#");
+}
+public List<String> getMentions(){
+	return getWordsPrefixedWith("@");
+}
+private List<String> getWordsPrefixedWith(String prefix){
+	List<String> results = new ArrayList<String>();
+	for(String word : getWords()){
+		if(word.startsWith(prefix)){
+			results.add(word);
+		}
+	}
+	return results;
 }
 }
